@@ -38,19 +38,16 @@ class Actor(object):
             self.actors.remove(self)
 
     def draw(self,surface):
-        self.update()
-        surface.blit(self.sprite, (self.x - self.center[0],self.y))
-
-class Actor_Derpmissile(Actor):
-
-    def draw(self,surface):
         if self.hit:
             self.draw_explosion(surface)
-            super(Actor_Derpmissile, self).update()
+            self.update()
+            surface.blit(self.sprite, (self.x - self.center[0],self.y))
             return
         if (self.x < self.center[0] + self.width) and (self.x > self.center[0] - self.width):
             self.update()
             surface.blit(self.sprite, (self.x - self.center[0],self.y))
+
+class Actor_Derpmissile(Actor):
 
     def update(self):
         super(Actor_Derpmissile, self).update()
@@ -69,10 +66,43 @@ class Actor_Derpmissile(Actor):
         self.sprite =self.load('data/derpmissile.png')
         super(Actor_Derpmissile, self).__init__(x,y,width,height,center,actors,sound)
 
-class Actor_Derpus(Actor):
+class Actor_Derpuss(Actor):
     def __init__(self,x,y,width,height,center,actors,sound):
-        self.sprite =self.load('data/derpus.png')
-        super(Actor_Derpus, self).__init__(x,y,width,height,center,actors,sound)
+        self.sprite1 =self.load('data/derpuss_1.png')
+        self.sprite2 =self.load('data/derpuss_2.png')
+        self.sprite = self.sprite1
+
+        self.yPosList = [0,3,6,8,10,11,12,12,11,10,8,6,3,0,-3,-6,-8,-10,-11,-12,-12,-11,-10,-8,-6,-3]
+        self.yPosLen = len(self.yPosList)
+        self.yPos = random.randint(0,self.yPosLen-1)
+        self.baseY = y
+        self.aniCountMax = 400
+        self.aniCount = 0
+        super(Actor_Derpuss, self).__init__(x,y,width,height,center,actors,sound)
+
+    def update(self):
+        super(Actor_Derpuss, self).update()
+        if self.hit:
+            return
+        self.rect.left = self.x - self.center[0]
+        self.rect.top = self.y
+        self.aniCount += 1
+
+        if self.aniCount % 50 ==0:
+            self.y = self.baseY + self.yPosList[self.yPos] *2
+            self.yPos+=1
+            if self.yPos == self.yPosLen:
+                self.yPos=0
+
+        if self.aniCount == self.aniCountMax:
+
+            self.aniCount =0
+            if self.sprite is self.sprite1:
+                self.sprite = self.sprite2
+            else:
+                self.sprite = self.sprite1
+
+
 
 class Player(Actor):
     def __init__(self,x,y,width,height,center,actors,sound):

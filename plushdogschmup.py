@@ -21,39 +21,39 @@ logger.setLevel(logging.INFO)
 class Shooter:
     def __init__(self, width,height):
 
-		self.screen = pygame.display.set_mode((width, height))
-		self.icon =  pygame.image.load('data/icon.gif')
-		pygame.display.set_icon(self.icon)
-		self.sound = SoundHandler()
-		filename = "data/level_01.tmx"
+        self.screen = pygame.display.set_mode((width, height))
+        self.icon =  pygame.image.load('data/icon.gif')
+        pygame.display.set_icon(self.icon)
+        self.sound = SoundHandler()
+        filename = "data/level_01.tmx"
 
-		# load data from pytmx
-		tmx_data = load_pygame(filename)
-		self.scrollspeed = 0.025
-		# create new data source
-		map_data = pyscroll.data.TiledMapData(tmx_data)
-		# create new renderer
-		self.map_layer = pyscroll.orthographic.BufferedRenderer(map_data, self.screen.get_size())
-		self.center = [width/2,0]
+        # load data from pytmx
+        tmx_data = load_pygame(filename)
+        self.scrollspeed = 0.025
+        # create new data source
+        map_data = pyscroll.data.TiledMapData(tmx_data)
+        # create new renderer
+        self.map_layer = pyscroll.orthographic.BufferedRenderer(map_data, self.screen.get_size())
+        self.center = [width/2,0]
 
-		self.actors = []
-		self.player = Player(0,height/2,width,height,self.center,self.actors,self.sound)
-		self.actors.append(self.player)
+        self.actors = []
+        self.player = Player(0,height/2,width,height,self.center,self.actors,self.sound)
+        self.actors.append(self.player)
 
-		#numDerpMissiles = 10
+        #numDerpMissiles = 10
 
-		self.levelLength = self.map_layer.map_rect[2]
+        self.levelLength = self.map_layer.map_rect[2]
 
-		base = 1000
-		for i in range(0,80):
-			x= i*25 + base
-			print x
-			self.actors.append(Actor_Derpmissile(x,random.randint(0,450),width,height,self.center,self.actors,self.sound))
+        base = 1000
+        for i in range(0,80):
+            x= i*25 + base
+            self.actors.append(Actor_Derpuss(x,random.randint(0,450),width,height,self.center,self.actors,self.sound))
+            self.actors.append(Actor_Derpmissile(x,random.randint(0,450),width,height,self.center,self.actors,self.sound))
 
-		self.lastCenter = self.levelLength - (width/2)
+        self.lastCenter = self.levelLength - (width/2)
 
 		# true when running
-		self.running = False
+        self.running = False
 
     def draw(self,):
         #print str(self.map_layer.view_rect.centerx)

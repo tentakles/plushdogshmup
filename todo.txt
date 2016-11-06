@@ -1,0 +1,115 @@
+
+####################
+		DONE
+####################
+
+renames etc.
+legg in data i datamapp
+lagg in kod i kodmapp
+gor en basklass for sprites med draw och update
+spetsigare kniv
+
+ljud for 
+	skjuta kniv 
+	plushdog hit, 
+	misile hit
+	
+centrera explosion
+
+gora ett sprit and colission and explosion test
+	skriva om actors och knifes till att vara rects
+	skapa
+	kollision mellan actors och knivar
+	kolission mellan plushdog och actors
+	explosion
+	merga tillbaka
+	
+
+fa in enemies i banan
+	impl missil
+		kod
+			aka framotoch 
+			aka ot players hall..
+				dett kraver att den har ref till player:
+					kan vara forsta objektet i array jamt.
+					
+hit detection
+	googla pygame hit detection
+skicka in alla sprites in i actors so de slipper ha en egen ref
+
+ikon
+
+map_data.visible_object_layers : kora med objetlager istf loopar och skiiit
+optimera inladdning av actors-sprites
+
+####################
+		TODO
+####################
+
+NEXT::::
+
+bygga bort offsetten ur actors, och istallet kora en spawn rutin som har en lista po saker att spawna och kollar mot nuvarande pos.
+anv'nda en spritesheet istallet
+
+ej kunna kora utanfor skarm
+
+cooldown efter treff
+dekrementera liv 
+visuell indikator av antal liv.
+
+introskarm
+endgame skarm
+gameover skarm
+
+MOAR NEXT:
+
+kunna ga vidare till nasta bana
+	generell banloop som kor igenom alla banor
+	gor enkel fejkboss
+	se att allt funkar med ban loopen
+	gora en yttre loop, som laddar bana, och viar intro, och visar outro om man klarat spelet.
+
+muta
+
+
+fiender
+	impl derpus
+		*rita 
+		animera
+		kod
+	boss 1
+		kod
+		animering
+		rita
+		
+l'ngre bana
+
+hit detection pa miljo
+
+parallax
+	baatvrak i bakgrunden
+	stanna debuggern och kolla vad som lasts in, kan man rita upp ett lager offsettat? 
+	googla parallax pygame pyscroll etc.
+	
+egna sprites
+	bg
+
+####################
+	NICE TO HAVE
+####################
+
+gora en supermario, outro dar man visar alla gubbar vid namn
+
+plushdog missil
+
+derpmissil minimissil
+
+forstorbar miljo
+
+bonusbana
+
+profiling
+
+infallbar fena
+
+

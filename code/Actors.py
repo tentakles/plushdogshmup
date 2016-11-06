@@ -163,4 +163,4 @@ class Player(Actor):
                         actor.hit = True
                         actor.x -= self.center[0]
 
-        self.knifes = filter(lambda x: x not in oldKnifes, self.knifes)
+        self.knifes = list(filter(lambda x: x not in oldKnifes, self.knifes))

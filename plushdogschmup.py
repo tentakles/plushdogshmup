@@ -19,8 +19,16 @@ logger.addHandler(ch)
 logger.setLevel(logging.INFO)
 
 class Shooter:
+
+    def load(self,filename):
+        return pygame.image.load(filename).convert_alpha()
+
     def __init__(self, width,height):
 
+        self.BLACK = ( 0, 0, 0)
+        self.WHITE = (255, 255, 255)
+
+        self.normalFont = pygame.font.Font('freesansbold.ttf', 16)
         self.screen = pygame.display.set_mode((width, height))
         self.icon =  pygame.image.load('data/icon.gif')
         pygame.display.set_icon(self.icon)
@@ -36,32 +44,36 @@ class Shooter:
         self.map_layer = pyscroll.orthographic.BufferedRenderer(map_data, self.screen.get_size())
         self.center = [width/2,0]
 
+        self.actorSpawns = map_data.visible_object_layers.next()
+
+        self.width=width
+        self.height=height
+        self.sprites=[]
+
+        self.sprites.append(self.load('data/sharkboat.png'))
+        self.sprites.append(self.load('data/knife.png'))
+        self.sprites.append(self.load('data/derpmissile.png'))
+        self.sprites.append(self.load('data/derpuss_1.png'))
+        self.sprites.append(self.load('data/derpuss_2.png'))
+
         self.actors = []
-        self.player = Player(0,height/2,width,height,self.center,self.actors,self.sound)
+        self.player = Player(0,height/2,width,height,self.center,self.actors,self.sound,self.sprites)
         self.actors.append(self.player)
 
-        #numDerpMissiles = 10
-
         self.levelLength = self.map_layer.map_rect[2]
-
-        base = 1000
-        for i in range(0,80):
-            x= i*25 + base
-            self.actors.append(Actor_Derpuss(x,random.randint(0,450),width,height,self.center,self.actors,self.sound))
-            self.actors.append(Actor_Derpmissile(x,random.randint(0,450),width,height,self.center,self.actors,self.sound))
-
         self.lastCenter = self.levelLength - (width/2)
 
 		# true when running
         self.running = False
 
-    def draw(self,):
-        #print str(self.map_layer.view_rect.centerx)
-        #print str(self.map_layer.map_rect[2])
-
+    def draw(self):
         self.map_layer.draw(self.screen, self.screen.get_rect())
         for actor in self.actors:
             actor.draw(self.screen)
+        return
+        textRender = self.normalFont.render('Num actors: ' + str(len(self.actors)),True, self.WHITE, self.BLACK)
+        textRect =  textRender.get_rect()
+        self.screen.blit(textRender, textRect)
 
     def handle_input(self):
         for event in pygame.event.get():
@@ -87,6 +99,17 @@ class Shooter:
 
     def update(self, td):
         self.last_update_time = td
+
+        usedActorSpawns = []
+        for actorSpawn in self.actorSpawns:
+            if actorSpawn.x < self.center[0] + self.width/2:
+                if actorSpawn.type=='missile':
+                    self.actors.append(Actor_Derpmissile(actorSpawn.x+self.width/2 ,actorSpawn.y,self.width,self.height,self.center,self.actors,self.sound,self.sprites))
+                if actorSpawn.type=='derpuss':
+                    self.actors.append(Actor_Derpuss(actorSpawn.x+self.width/2,actorSpawn.y,self.width,self.height,self.center,self.actors,self.sound,self.sprites))              
+                usedActorSpawns.append(actorSpawn)
+
+        self.actorSpawns = filter(lambda x: x not in usedActorSpawns, self.actorSpawns)
 
         if self.map_layer.view_rect.centerx < self.lastCenter:
             self.center[0] += self.scrollspeed

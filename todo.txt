@@ -42,24 +42,56 @@ ikon
 map_data.visible_object_layers : kora med objetlager istf loopar och skiiit
 optimera inladdning av actors-sprites
 
-####################
-		TODO
-####################
-
-NEXT::::
+felsoka explosionerna
 
 bygga bort offsetten ur actors, och istallet kora en spawn rutin som har en lista po saker att spawna och kollar mot nuvarande pos.
 anv'nda en spritesheet istallet
 
+	self.x - self.center[0]
+	kan man gora det vind infogningen istallet
+
+byt namn p[ audio
+
 ej kunna kora utanfor skarm
 
-cooldown efter treff
-dekrementera liv 
-visuell indikator av antal liv.
+ta bort gameover ljudet fran hit
 
-introskarm
+sprites som en dictionary
+
+LIV i plushdog
+	cooldown efter treff
+		visa r'tt skarm
+		rakna ned
+	*dekrementera liv 
+	*visuell indikator av antal liv.
+	gameover skarm vid slut av liv.
+		kunna kora continue, som startar om bana, kunna kora exit, som g[r till menuskarmen.
+		fejdar in skall den.
+		hantera result fr[n gamemover och gora olika saker.
+	
+	gaemover ljdu vid gameover
+
+	impl derpus
+		*rita 
+		animera
+		kod
+
+####################
+		TODO
+####################
+
+intro meny
+	return to intromeny fr[n gamemover state
+	return to intromeny fr[n game finished state
+
+level clear screen
 endgame skarm
-gameover skarm
+
+init scrollspeed from level array
+
+snygga upp actor logik kring draw/update
+
+allt spelospeifict i en basklass till plsudhgosmhup
 
 MOAR NEXT:
 
@@ -69,14 +101,11 @@ kunna ga vidare till nasta bana
 	se att allt funkar med ban loopen
 	gora en yttre loop, som laddar bana, och viar intro, och visar outro om man klarat spelet.
 
-muta
-
+mute
+	impl mute, 
+	mute indicator
 
 fiender
-	impl derpus
-		*rita 
-		animera
-		kod
 	boss 1
 		kod
 		animering
